@@ -25,7 +25,7 @@ typedef struct {
 #define Head(Q) (Q).HEAD
 #define Tail(Q) (Q).TAIL
 #define InfoHead(Q) (Q).HEAD->Info
-#define InfoTail (Q) (Q).TAIL->Info
+#define InfoTail(Q) (Q).TAIL->Info
 #define Next(P) (P)->Next
 #define Info(P) (P)->Info
 

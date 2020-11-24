@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "header_tubes.c"
+#include "queue.h"
 
 void Alokasi(address *P, ElType X){
     *P = (address) malloc(sizeof(Node));
@@ -46,5 +46,4 @@ void Dequeue(Queue *Q, ElType *X){
     Next(P) = Nil;
     Dealokasi(P);
 }
-
 
