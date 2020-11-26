@@ -4,13 +4,17 @@
 #ifndef __MESINKATA1_H__
 #define __MESINKATA1_H__
 
+#include "boolean.h"
 #include "mesinkar.h"
+#include "matriks.h"
+#include "graph.h"
 
 #define NMax 50
 #define BLANK ' '
+#define ENTER '\n'
 
 typedef struct {
-    char TabKata[NMax];
+    char TabKata[NMax+1];
     int Length;
 } Kata;
 
@@ -23,7 +27,7 @@ void IgnoreBlank();
 I.S.: CC sembarang
 F.S.: CC ≠ BLANK atau CC = MARK */
 
-void STARTKATA();
+void STARTKATA(char *namafile);
 /* I.S.: CC sembarang
 F.S.: EndKata = true, dan CC = Mark;
 atau EndKata = false,
@@ -42,5 +46,26 @@ I.S.: CC adalah karakter pertama dari kata
 F.S.: CKata berisi kata yang sudah diakuisisi;
 CC = BLANK atau CC = MARK;
 CC adalah karakter sesudah karakter terakhir yang diakuisisi */
+
+void InputCommand(Kata *K);
+/* I.S. Sembarang
+F.S. menerima masukkan dari user dan menyimpannya di K */
+
+void PrintKata (Kata K);
+/* I.S. Kata K terdefinisi
+F.S. K tercetak di layar */
+
+boolean IsKataSama (Kata K1, Kata K2);
+/* true jika K1 sama dengan K2 */
+
+void CreateKata(char c[], Kata *K);
+/* I.S. string c[] terdefinisi
+F.S. mengonversi bentuk string menjadi kata K */
+
+MATRIKS KataToMatriks(int Baris, int Kolom);
+/*Membaca kata menjadi matriks*/
+
+int KataToInt (Kata K);
+/* konversi kata menjadi integer*/
 
 #endif
