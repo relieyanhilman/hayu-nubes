@@ -38,51 +38,51 @@ int main(){
     {
         if (IsKataSama(K,MOVE))
         {
-            printf("GRACE IMBA1\n");
+            printf("AKU IMBA1\n");
         }
         else if (IsKataSama(K,STATUS))
         {
-            printf("GRACE IMBA2\n");
+            printf("AKU IMBA2\n");
         }
         else if (IsKataSama(K,CHECKORDER))
         {
-            printf("GRACE IMBA3\n");
+            printf("AKU IMBA3\n");
         }
         else if (IsKataSama(K,STARTBUILD))
         {
-            printf("GRACE IMBA4\n");
+            printf("AKU IMBA4\n");
         }
         else if (IsKataSama(K,FINISHBUILD))
         {
-            printf("GRACE IMBA5\n");
+            printf("AKU IMBA5\n");
         }
         else if (IsKataSama(K,ADDCOMPONENT))
         {
-            printf("GRACE IMBA6\n");
+            printf("AKU IMBA6\n");
         }
         else if (IsKataSama(K,REMOVECOMPONENT))
         {
-            printf("GRACE IMBA7\n");
+            printf("AKU IMBA7\n");
         }
         else if (IsKataSama(K,SHOP))
         {
-            printf("GRACE IMBA8\n");
+            printf("AKU IMBA8\n");
         }
         else if (IsKataSama(K,DELIVER))
         {
-            printf("GRACE IMBA9\n");
+            printf("AKU IMBA9\n");
         }
         else if (IsKataSama(K,END_DAY))
         {
-            printf("GRACE IMBA10\n");
+            printf("AKU IMBA10\n");
         }
         else if (IsKataSama(K,SAVE))
         {
-            printf("GRACE IMBA11\n");
+            printf("AKU IMBA11\n");
         }
         else if (IsKataSama(K,MAP))
         {
-            printf("GRACE IMBA12\n");
+            printf("AKU IMBA12\n");
         }
         else
         {
