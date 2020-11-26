@@ -18,10 +18,10 @@
 
 /* Definisi elemen dan koleksi objek */
 typedef int IdxType; /* type indeks */
-typedef int ElType;  /* type elemen tabel */
+typedef int ElTypeArray;  /* type elemen tabel */
 typedef struct
 {
-    ElType *TI; /* memori tempat penyimpan elemen (container) */
+    ElTypeArray *TI; /* memori tempat penyimpan elemen (container) */
     int Neff;   /* >=0, banyaknya elemen efektif */
     int MaxEl;  /* ukuran elemen */
 } TabInt;
@@ -40,7 +40,7 @@ typedef struct
 /* ********** SELEKTOR ********** */
 #define Neff(T) (T).Neff
 #define TI(T) (T).TI
-#define Elmt(T, i) (T).TI[(i)]
+#define ElmtArray(T, i) (T).TI[(i)]
 #define MaxEl(T) (T).MaxEl
 
 /* ********** KONSTRUKTOR ********** */

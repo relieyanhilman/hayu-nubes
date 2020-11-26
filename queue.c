@@ -3,17 +3,17 @@
 #include <stdbool.h>
 #include "queue.h"
 
-void Alokasi(address *P, ElType X){
+void Alokasi(address *P, ElTypeQ X){
     *P = (address) malloc(sizeof(Node));
-    Info(*P) = X;
-    Next(*P) = Nil;
+    InfoQ(*P) = X;
+    NextQ(*P) = Nil;
 }
 
-void Dealokasi(address P){
+void DealokasiQ(address P){
     free(P);
 }
 
-boolean IsEmpty(Queue Q){
+boolean IsEmptyQ(Queue Q){
     return ((Head(Q) == Nil) && (Tail(Q) == Nil));
 }
 
@@ -22,28 +22,28 @@ void CreateEmpty(Queue *Q){
     Tail(*Q) = Nil;
 }
 
-void Enqueue(Queue *Q, ElType X){
+void Enqueue(Queue *Q, ElTypeQ X){
     address P;
     Alokasi (&P,X);
     if (P!=Nil){
-        if (IsEmpty(*Q)){
+        if (IsEmptyQ(*Q)){
             Head(*Q) = P;
         } else {
-            Next(Tail(*Q)) = P;
+            NextQ(Tail(*Q)) = P;
         }
         Tail(*Q) = P;
     }
 }
 
-void Dequeue(Queue *Q, ElType *X){
+void Dequeue(Queue *Q, ElTypeQ *X){
     address P;
     *X = InfoHead(*Q);
     P = Head(*Q);
-    Head(*Q) = Next(Head(*Q));
+    Head(*Q) = NextQ(Head(*Q));
     if (Head(*Q) == Nil) {
         Tail(*Q) = Nil;
     }
-    Next(P) = Nil;
-    Dealokasi(P);
+    NextQ(P) = Nil;
+    DealokasiQ(P);
 }
 

@@ -76,7 +76,7 @@ F.S. menerima masukkan dari user dan menyimpannya di K */
 void PrintKata (Kata K){
 /* I.S. Kata K terdefinisi
 F.S. K tercetak di layar */
-    int i = 1;
+    int i = 0;
     while (i<K.Length){
         printf("%c", K.TabKata[i]);
         i++;

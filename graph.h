@@ -14,7 +14,7 @@ typedef List infotypeG; /* tipe info */
 typedef struct tElmtGraph *addressG;
 typedef struct tElmtGraph {
     infotypeG info;
-    addressG next;
+    addressG NextGraph;
 } ElmtGraph;
 typedef struct {
     addressG FirstG;
@@ -22,7 +22,7 @@ typedef struct {
 
 /* SELEKTOR */
 #define Info(P) (P)->info
-#define Next(P) (P)->next
+#define NextGraph(P) (P)->NextGraph
 #define FirstG(G) (G).FirstG
 
 /****************** PEMBUATAN GRAPH KOSONG ******************/
@@ -38,7 +38,7 @@ boolean IsEmptyGraph(Graph G);
 addressG AlokasiGraph (infotypeG X);
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
-/* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
+/* menghasilkan P, maka Info(P)=X, NextGraph(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 void DealokasiGraph (addressG *P);
 /* I.S. P terdefinisi */

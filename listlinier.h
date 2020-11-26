@@ -16,7 +16,7 @@ typedef int infotypeL;
 typedef struct tElmtlist *addressL;
 typedef struct tElmtlist {
 	infotypeL info;
-	addressL next;
+	addressL NextList;
 } ElmtList;
 typedef struct {
 	addressL FirstL;
@@ -24,11 +24,11 @@ typedef struct {
 
 /* Definisi list : */
 /* List kosong : First(L) = Nil */
-/* Setiap elemen dengan address P dapat diacu Info(P), Next(P) */
-/* Elemen terakhir list : jika addressnya Last, maka Next(Last)=Nil */
+/* Setiap elemen dengan address P dapat diacu Info(P), NextList(P) */
+/* Elemen terakhir list : jika addressnya Last, maka NextList(Last)=Nil */
 
 #define Info(P) (P)->info
-#define Next(P) (P)->next
+#define NextList(P) (P)->NextList
 #define FirstL(L) (L).FirstL
 
 /* PROTOTYPE */
@@ -45,7 +45,7 @@ void CreateEmptyList (List *L);
 addressL AlokasiList (infotypeL X);
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
-/* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
+/* menghasilkan P, maka Info(P)=X, NextList(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 void DealokasiList (addressL *P);
 /* I.S. P terdefinisi */
@@ -113,7 +113,7 @@ void DelLastList (List *L, addressL *P);
 /* jika ada */
 void DelAfterList (List *L, addressL *Pdel, addressL Prec);
 /* I.S. List tidak kosong. Prec adalah anggota list  */
-/* F.S. Menghapus Next(Prec): */
+/* F.S. Menghapus NextList(Prec): */
 /*      Pdel adalah alamat elemen list yang dihapus  */
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/

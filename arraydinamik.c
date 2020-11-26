@@ -1,12 +1,11 @@
 #include<stdlib.h>
 #include<stdio.h>
-#include<string.h>
 #include "arraydinamik.h"
 
 
 /* Konstruktor : create tabel kosong  */
 void MakeEmpty(TabInt *T, int maxel){
-    TI(*T) = (ElType *)malloc((maxel+1) * sizeof(ElType));
+    TI(*T) = (ElTypeArray *)malloc((maxel+1) * sizeof(ElTypeArray));
     Neff(*T) = 0;
     MaxEl(*T) = maxel;
 }
@@ -46,7 +45,7 @@ IdxType GetLastIdx(TabInt T){
 /* Mengirimkan indeks elemen T terakhir */
 
 /* ********** Test Indeks yang valid ********** */
-boolean IsIdxValid(TabInt T, IdxType i){
+boolean IsIdxValidArray(TabInt T, IdxType i){
     return ((i>=IdxMin) && (i<=MaxEl(T)));
 }
 /* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
@@ -73,7 +72,7 @@ boolean IsFull(TabInt T){
 /* *** Mendefinisikan isi tabel dari pembacaan *** */
 void BacaIsi(TabInt *T){
     int N;
-    ElType inp;
+    ElTypeArray inp;
     //
     do
     {
@@ -91,7 +90,7 @@ void BacaIsi(TabInt *T){
         for (IdxType i = GetFirstIdx(*T); i <= GetLastIdx(*T); i++)
         {
             scanf("%d",&inp);
-            Elmt(*T,i) = inp;
+            ElmtArray(*T,i) = inp;
         }
     }
 }
@@ -110,7 +109,7 @@ void TulisIsiTab(TabInt T){
     }
     else{
         for (IdxType i = GetFirstIdx(T); i <= GetLastIdx(T); i++){
-            printf("%d", Elmt(T, i));
+            printf("%d", ElmtArray(T, i));
             printf(" ");
         }
     }

@@ -12,9 +12,9 @@
 #define KolMax 30
 
 typedef int indeks; /* indeks baris, kolom */
-typedef char ElType; 
+typedef char ElTypeMatriks; 
 typedef struct { 
-	ElType Mem[BrsMax+1][KolMax+1];
+	ElTypeMatriks Mem[BrsMax+1][KolMax+1];
     int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
 	int NKolEff; /* banyaknya/ukuran kolom yg terdefinisi */
 } MATRIKS;
@@ -32,14 +32,14 @@ void MakeMATRIKS (int NB, int NK, MATRIKS * M);
 
 #define NBrsEff(M) (M).NBrsEff
 #define NKolEff(M) (M).NKolEff
-#define Elmt(M,i,j) (M).Mem[(i)][(j)]
+#define ElmtMatriks(M,i,j) (M).Mem[(i)][(j)]
 
-boolean IsIdxValid (int i, int j);
+boolean IsIdxValidMatriks (int i, int j);
 /* Mengirimkan true jika i, j adalah indeks yang valid untuk matriks apa pun */
 
 /* ********** KELOMPOK BACA/TULIS ********** */ 
 void BacaMATRIKS (MATRIKS * M, int NB, int NK);
-/* I.S. IsIdxValid(NB,NK) */ 
+/* I.S. IsIdxValidMatriks(NB,NK) */ 
 /* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
 /* Proses: Melakukan MakeMATRIKS(M,NB,NK) dan mengisi nilai efektifnya */
 /* Selanjutnya membaca nilai elemen per baris dan kolom */

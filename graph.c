@@ -26,14 +26,14 @@ boolean IsEmptyGraph(Graph G)
 addressG AlokasiGraph(infotypeG X)
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
-/* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
+/* menghasilkan P, maka Info(P)=X, NextGraph(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 {
     addressG P = (addressG) malloc(sizeof(ElmtGraph));
     if (P!=Nil)
     {
         Info(P) = X;
-        Next(P) = Nil;
+        NextGraph(P) = Nil;
     }
 }
 void DealokasiGraph(addressG *P)
@@ -46,7 +46,7 @@ void DealokasiGraph(addressG *P)
     while (PL!=Nil)
     {
         P2 = PL;
-        PL = Next(PL);
+        PL = NextList(PL);
         DealokasiList(&P2);
     }
     free(*P);
@@ -61,7 +61,7 @@ void InsVFirstGraph (Graph *G, infotypeG X)
     addressG P = AlokasiGraph(X);
     if (P!=Nil)
     {
-        Next(P) = FirstG(*G);
+        NextGraph(P) = FirstG(*G);
         FirstG(*G) = P;
     }
 }
@@ -78,9 +78,9 @@ void InsVLastGraph (Graph *G, infotypeG X)
         else
         {
             addressG temp = FirstG(*G);
-            while (Next(temp)!=Nil) temp = Next(temp);
-            Next(P) = Nil;
-            Next(temp) = P;
+            while (NextGraph(temp)!=Nil) temp = NextGraph(temp);
+            NextGraph(P) = Nil;
+            NextGraph(temp) = P;
         }
     }
 }
@@ -108,7 +108,7 @@ int NbElmtGraph(Graph G)
     while (P!=Nil)
     {
         ++count;
-        P = Next(P);
+        P = NextGraph(P);
     }
     return count;
 }
@@ -121,7 +121,7 @@ infotypeG SearchGraph(Graph G, int n)
     int i = 1;
     while (i<n)
     {
-        P = Next(P);
+        P = NextGraph(P);
         ++i;
     }
     return Info(P);
@@ -136,7 +136,7 @@ int SearchInfoGraph(infotypeG L, infotypeL i)
         while ((P!=Nil)&&(Info(P)!=i))
         {
             ++count;
-            P = Next(P);
+            P = NextList(P);
         }
         if (P==Nil) return 0;
         else return count;
@@ -144,10 +144,10 @@ int SearchInfoGraph(infotypeG L, infotypeL i)
     else return 0;
 }
 
-void GenerateRandomGraph(Graph *G,int n)
+/*void GenerateRandomGraph(Graph *G,int n)
 /* I.S. G sembarang */
 /* F.S. G adalah connected graph dengan n node */
-/* G didapat melalui hasil generate secara random */
+/* G didapat melalui hasil generate secara random 
 {
     CreateEmptyGraph(G);
     ResetGraph(G,n);
@@ -161,8 +161,8 @@ void GenerateRandomGraph(Graph *G,int n)
         switch (dir)
         {
             case 0 : p[k] = PrevX(P); break;
-            case 1 : p[k] = NextY(P); break;
-            case 2 : p[k] = NextX(P); break;
+            case 1 : p[k] = NextGraphY(P); break;
+            case 2 : p[k] = NextGraphX(P); break;
             case 3 : p[k] = PrevY(P); break;
         }
     }
@@ -176,10 +176,10 @@ void GenerateRandomGraph(Graph *G,int n)
         for (m=1;m<=n;++m)
         {
             if (EQPoint(p[m],PrevX(p[k]))) Info(PL) = m;
-            else if (EQPoint(p[m],NextY(p[k]))) Info(Next(PL)) = m;
-            else if (EQPoint(p[m],NextX(p[k]))) Info(Next(Next(PL))) = m;
-            else if (EQPoint(p[m],PrevY(p[k]))) Info(Next(Next(Next(PL)))) = m;
+            else if (EQPoint(p[m],NextGraphY(p[k]))) Info(NextGraph(PL)) = m;
+            else if (EQPoint(p[m],NextGraphX(p[k]))) Info(NextGraph(NextGraph(PL))) = m;
+            else if (EQPoint(p[m],PrevY(p[k]))) Info(NextGraph(NextGraph(NextGraph(PL)))) = m;
         }
-        PG = Next(PG);
+        PG = NextGraph(PG);
     }
-}
+} */
