@@ -1,7 +1,7 @@
 #include "matriks.h"
 #include<stdlib.h>
 #include<stdio.h>
-
+#include "mesinkata.h"
 void MakeMATRIKS (int NB, int NK, MATRIKS * M){
     M->NBrsEff = NB;
     M->NKolEff = NK;
@@ -25,7 +25,6 @@ boolean IsIdxValidMatriks (int i, int j){
 
 
 void BacaMATRIKS (MATRIKS * M, int NB, int NK){
-    MakeMATRIKS(NB, NK, M);
     int i,j;
     for (i = GetFirstIdxBrs(*M); i <= GetLastIdxBrs(*M); i++){
         for (j = GetFirstIdxKol(*M); j <= GetLastIdxKol(*M); j++){
@@ -64,9 +63,7 @@ indeks GetLastIdxKol (MATRIKS M){
 }
 
 
-void SetElement(MATRIKS *M,int NB,int NK){
-    ElTypeMatriks X;
-    scanf("%c",&X);
+void SetElement(MATRIKS *M,int NB,int NK,char X){
     ElmtMatriks(*M,NB,NK) = X;
 }
 

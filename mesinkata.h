@@ -68,4 +68,6 @@ MATRIKS KataToMatriks(int Baris, int Kolom);
 int KataToInt (Kata K);
 /* konversi kata menjadi integer*/
 
+char KataToChar (Kata K);
+
 #endif

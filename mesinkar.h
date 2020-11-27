@@ -24,4 +24,5 @@ F.S.: CC adalah karakter berikutnya dari CC yang lama,
 CC mungkin = MARK
 Jika CC = MARK maka EOP akan menyala (true) */
 
+
 #endif

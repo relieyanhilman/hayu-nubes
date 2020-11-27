@@ -68,7 +68,7 @@ indeks GetLastIdxBrs (MATRIKS M);
 indeks GetLastIdxKol (MATRIKS M);
 /* Mengirimkan indeks kolom terbesar M */
 
-void SetElement(MATRIKS *M,int NB,int NK); 
+void SetElement(MATRIKS *M,int NB,int NK,char X); 
 
 char GetElement(MATRIKS M,int NB,int NK);
 

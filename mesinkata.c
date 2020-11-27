@@ -142,3 +142,9 @@ int KataToInt (Kata K){
     }
     return value;
 }
+
+char KataToChar (Kata K)
+/* K.Length = 1 , mengeluarkan konversi K ke char */
+{
+    return (K.TabKata[0]);
+}
