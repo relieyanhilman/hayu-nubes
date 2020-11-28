@@ -12,7 +12,8 @@
 
 // GLOBAL VARIABLE
 Kata K,MULAI,MOVE,STATUS,CHECKORDER,STARTBUILD,FINISHBUILD,ADDCOMPONENT,REMOVECOMPONENT,SHOP,DELIVER,END_DAY,SAVE,MAP,EXIT;
-MATRIKS PETA;
+MATRIKS PETA; 
+Graph G;
 int NB,NK;
 
 void CREATECOMMAND(void)
@@ -43,6 +44,8 @@ void MAKEPETA()
 {
     STARTKATA("konfigurasimap.txt");
     GETTEMPAT();
+    int Baris = NB;
+    int Kolom = NK;
     MakeMATRIKS(NB,NK,&PETA);
     ADVKATA();
     int i=1;
@@ -74,12 +77,28 @@ void MAKEPETA()
                 char PELANGGANINT = j +'0';
                 SetElement(&PETA,NB,NK,PELANGGANINT);
                 j++;
-            }
+            } 
             
-        }
+        } 
         i++;
     }
-}
+    
+    /*loop pertama */
+    int a = 1, b = 1; 
+    
+    ADVKATA();
+    CreateGraph(a, &G);
+    for (a=1 ; a<= JUMLAHBANGUNAN; a++ ){
+        for (b = 1; b<=JUMLAHBANGUNAN ; b++) {
+            int inputan = KataToInt(CKata);
+            if (inputan == 1) {
+                    InsertEdge (&G, i, j);
+            } ADVKATA();
+        }
+    }  
+    }
+
+
 
 void Shop(void)
 {
@@ -184,7 +203,15 @@ int main()
     {
         if (IsKataSama(K,MOVE))
         {
-            printf("AKU IMBA1\n");
+            
+            MAKEPETA();
+            if (isConnected(G, 1, 4)) {
+                printf("ye bener");
+            }
+            else{
+                printf("coba lagi");
+            }
+            
         }
         else if (IsKataSama(K,STATUS))
         {

@@ -1,185 +1,178 @@
 /* File : graph.c */
 
+#include "boolean.h"
 #include "graph.h"
-#include "listlinier.h"
-#include "point.h"
 #include <stdlib.h>
-#include <time.h>
 #include <stdio.h>
 
-/****************** PEMBUATAN GRAPH KOSONG ******************/
-void CreateEmptyGraph(Graph *G)
-/* I.S. G sembarang */
-/* F.S. Terbentuk graph kosong */
-{
-    FirstG(*G) = Nil;
+/* *** Konstruktor *** */
+void CreateGraph(infograph X, Graph* G){
+	/* I.S. Sembarang ; F.S. Terbentuk Graph dengan satu simpul dengan Id=X */
+	adrNode P;
+
+	FirstG(*G) = Nil;
+	InsertNode(G, X, &P);
 }
 
-/****************** TEST GRAPH KOSONG ******************/
-boolean IsEmptyGraph(Graph G)
-/* mengeluarkan true jika graph G kosong */
-{
-    return (FirstG(G)==Nil);
+
+/* *** Manajemen Memory List Simpul (Leader) *** */
+adrNode AlokNodeGraph (infograph X){
+	/*	Mengembalikan address hasil alokasi Simpul X .
+	Jika alokasi berhasil, maka address tidak Nil, misalnya
+	menghasilkan P, maka Id X, 
+	Trail(P)=Nil,
+	dan NextG(P)=Nil. Jika alokasi
+	gagal, mengembalikan Nil. */
+	adrNode P;
+
+	P = (adrNode) malloc (sizeof(NodeGraph));
+	if(P != Nil){
+		Id(P) = X;
+		Trail(P) = Nil;
+		NextG(P) = Nil;
+	}
+
+    return P;
 }
 
-/****************** Manajemen Memori ******************/
-addressG AlokasiGraph(infotypeG X)
-/* Mengirimkan address hasil alokasi sebuah elemen */
-/* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
-/* menghasilkan P, maka Info(P)=X, NextGraph(P)=Nil */
-/* Jika alokasi gagal, mengirimkan Nil */
-{
-    addressG P = (addressG) malloc(sizeof(ElmtGraph));
-    if (P!=Nil)
-    {
-        Info(P) = X;
-        NextGraph(P) = Nil;
-    }
-}
-void DealokasiGraph(addressG *P)
-/* I.S. P terdefinisi */
-/* F.S. P dikembalikan ke sistem */
-/* Melakukan dealokasi/pengembalian address P */
-{
-    addressL PL = FirstL(Info(*P));
-    addressL P2;
-    while (PL!=Nil)
-    {
-        P2 = PL;
-        PL = NextList(PL);
-        DealokasiList(&P2);
-    }
-    free(*P);
+void DeAlokNodeGraph (adrNode P){
+	/* I.S. P terdefinisi F.S. P dikembalikan ke sistem */
+    free(P);
 }
 
-/*** PENAMBAHAN ELEMEN ***/
-void InsVFirstGraph (Graph *G, infotypeG X)
-/* I.S. G mungkin kosong */
-/* F.S. Melakukan alokasi sebuah elemen dan */
-/* menambahkan elemen pertama dengan list X jika alokasi berhasil */
-{
-    addressG P = AlokasiGraph(X);
-    if (P!=Nil)
-    {
-        NextGraph(P) = FirstG(*G);
-        FirstG(*G) = P;
+adrSuccNode AlokSuccNode(adrNode Pn){
+	/* 	Mengembalikan address hasil alokasi.
+	Jika alokasi berhasil, maka address tidak Nil, misalnya
+	menghasilkan Pt, maka Succ (Pt)=Pn dan NextG(Pt)=Nil. 
+	Jika alokasi gagal, mengembalikan Nil. */
+	adrSuccNode P;
+
+   	P = (adrSuccNode) malloc(sizeof(SuccNode));
+    if(P != Nil){
+	    NextG(P) = Nil;
+	    Succ(P) = Pn;
     }
-}
-void InsVLastGraph (Graph *G, infotypeG X)
-/* I.S. G mungkin kosong */
-/* F.S. Melakukan alokasi sebuah elemen dan */
-/* menambahkan elemen graph di akhir: elemen terakhir yang baru */
-/* merupakan list X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
-{
-    addressG P = AlokasiGraph(X);
-    if (P!=Nil)
-    {
-        if (IsEmptyGraph(*G)) InsVFirstGraph(G,X);
-        else
-        {
-            addressG temp = FirstG(*G);
-            while (NextGraph(temp)!=Nil) temp = NextGraph(temp);
-            NextGraph(P) = Nil;
-            NextGraph(temp) = P;
-        }
-    }
-}
-void ResetGraph(Graph *G, int n)
-/* I.S. Graph G sembarang */
-/* F.S. Terbentuk Graph dengan jumlah elemen n dengan semua info merupakan list kosong */
-{
-    CreateEmptyGraph(G);
-    List L;
-    int i,j;
-    for (i=0;i<n;++i)
-    {
-        CreateEmptyList(&L);
-        for (j=0;j<4;++j) InsVLastList(&L,NodeUndef);
-        InsVLastGraph(G,L);
-    }
+	return P;
 }
 
-/*** JUMLAH ELEMEN ***/
-int NbElmtGraph(Graph G)
-/* mengeluarkan jumlah node pada graph G */
-{
-    addressG P = FirstG(G);
-    int count = 0;
-    while (P!=Nil)
-    {
-        ++count;
-        P = NextGraph(P);
-    }
-    return count;
+void DealokSuccNode (adrSuccNode P){
+	/* I.S. P terdefinisi F.S. P dikembalikan ke sistem */
+    free(P);
 }
 
-/*** PENCARIAN ELEMEN ***/
-infotypeG SearchGraph(Graph G, int n)
-/* NbElmtGraph(G) lebih besar dari n, mengeluarkan list yang merupakan info dari elemen ke n graph G */
-{
-    addressG P = FirstG(G);
-    int i = 1;
-    while (i<n)
-    {
-        P = NextGraph(P);
-        ++i;
-    }
-    return Info(P);
-}
-int SearchInfoGraph(infotypeG L, infotypeL i)
-/* mengeluarkan posisi dimana list L bernilai i, mengeluarkan 0 jika tidak ada */
-{
-    if (!IsEmptyList(L))
-    {
-        int count = 1;
-        addressL P = FirstL(L);
-        while ((P!=Nil)&&(Info(P)!=i))
-        {
-            ++count;
-            P = NextList(P);
-        }
-        if (P==Nil) return 0;
-        else return count;
-    }
-    else return 0;
+
+adrNode SearchNode (Graph G, infograph X){
+	/*	Mengembalikan address simpul dengan Id=X jika sudah ada pada graph G, Nil jika belum */
+	adrNode P;
+
+	P = FirstG(G);
+	while(P != Nil){
+		if(Id(P) == X){
+			return P;
+		}
+		P = NextG(P);
+	}
+
+    return P;
 }
 
-/*void GenerateRandomGraph(Graph *G,int n)
-/* I.S. G sembarang */
-/* F.S. G adalah connected graph dengan n node */
-/* G didapat melalui hasil generate secara random 
-{
-    CreateEmptyGraph(G);
-    ResetGraph(G,n);
-    POINT p[n+1];
-    p[1] = MakePOINT(0,0);
-    int k,m;
-    for(k=2;k<=n;++k)
-    {
-        POINT P = p[k-1];
-        int dir = (rand()%4);
-        switch (dir)
-        {
-            case 0 : p[k] = PrevX(P); break;
-            case 1 : p[k] = NextGraphY(P); break;
-            case 2 : p[k] = NextGraphX(P); break;
-            case 3 : p[k] = PrevY(P); break;
-        }
-    }
-    addressG PG = FirstG(*G);
-    addressL PL;
-    List L;
-    for (k=1;k<=n;++k)
-    {
-        L = Info(PG);
-        PL = FirstL(L);
-        for (m=1;m<=n;++m)
-        {
-            if (EQPoint(p[m],PrevX(p[k]))) Info(PL) = m;
-            else if (EQPoint(p[m],NextGraphY(p[k]))) Info(NextGraph(PL)) = m;
-            else if (EQPoint(p[m],NextGraphX(p[k]))) Info(NextGraph(NextGraph(PL))) = m;
-            else if (EQPoint(p[m],PrevY(p[k]))) Info(NextGraph(NextGraph(NextGraph(PL)))) = m;
-        }
-        PG = NextGraph(PG);
-    }
-} */
+
+
+adrSuccNode SearchEdge (Graph G, infograph prec, infograph succ){
+	/* 	Mengembalikan address trailer yang menyimpan info busur (prec,succ)
+	jika sudah ada pada graph G, Nil jika belum */
+	adrNode Pn;
+	adrSuccNode P;
+
+    Pn = SearchNode(G, prec);
+	if(Pn == Nil){
+		// Tidak ada node prec
+		return Nil;
+	}
+
+	P = Trail(Pn);
+	// ada prec, mencari (prec, succ)
+    while(P != Nil){
+		if(Id(Succ(P)) == succ){
+			return P;
+		}
+		P = NextG(P);
+	}
+
+	return P;
+}
+
+void InsertNode (Graph* G, infograph X, adrNode* Pn){
+	/*	Menambahkan simpul X ke dalam graph, jika alokasi X berhasil.
+	I.S. G terdefinisi, X terdefinisi dan belum ada pada G.
+	F.S. Jika alokasi berhasil, X menjadi elemen
+	terakhir G, Pn berisi address simpul X. Jika alokasi gagal, G tetap, Pn berisi Nil */
+	adrNode P;
+
+    *Pn = AlokNodeGraph(X);
+
+	P = FirstG(*G);
+	if(P == Nil){
+		// kasus graf kosong
+		FirstG(*G) = *Pn;
+	}
+
+	else {
+		// alokasi ke elemen terakhir
+		while(NextG(P) != Nil){
+			P = NextG(P);
+		}
+		NextG(P) = *Pn;
+	}
+}
+
+void InsertEdge (Graph* G, infograph prec, infograph succ){
+	/* 	Menambahkan busur dari prec menuju succ ke dalam G 
+	I.S. G, prec, succ terdefinisi.
+	F.S. Jika belum ada busur (prec,succ) di G, maka tambahkan busur
+		(prec,succ) ke G. Jika simpul prec/succ belum ada pada G,
+		tambahkan simpul tersebut dahulu. Jika sudah ada busur (prec,succ)
+		di G, maka G tetap. */
+	adrNode Pprec;
+	adrNode Psucc;
+	adrSuccNode P;
+
+    if (SearchEdge(*G, prec, succ) == Nil){
+		Pprec = SearchNode(*G, prec);
+		Psucc = SearchNode(*G, succ);
+
+		if(Pprec == Nil){
+			InsertNode(G, prec, &Pprec);
+		}
+		if(Psucc == Nil){
+			InsertNode(G, succ, &Psucc);
+		}
+
+		P = Trail(Pprec);
+
+		if(P == Nil){
+			Trail(Pprec) = AlokSuccNode(Psucc);
+		}
+		else {
+			while(NextG(P) != Nil){
+				P = NextG(P);
+			}
+			NextG(P) = AlokSuccNode(Psucc);
+		}
+	}
+	// else Edge sudah ada
+	
+}
+
+/* *** Lain-Lain *** */
+
+void Connect(Graph *G, infograph N1, infograph N2){
+	/* Menyambungkan N1 dan N2 */
+	InsertEdge(G, N1, N2);
+	InsertEdge(G, N2, N1);
+}
+
+boolean isConnected (Graph G, infograph N1, infograph N2){
+	/* Mengembalikan apakah N1 dan N2 terhubung */
+	return (SearchEdge(G, N1, N2) != Nil) && (SearchEdge(G, N2, N1) != Nil);
+}
