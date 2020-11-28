@@ -33,7 +33,8 @@ void CREATECOMMAND(void)
     CreateKata("EXIT",&EXIT);   
 }
 
-void GETTEMPAT(void){
+void GETTEMPAT(void)
+{
     NB = KataToInt(CKata);
     ADVKATA();
     NK = KataToInt(CKata);
@@ -86,19 +87,19 @@ void Shop(void)
     int i=0;
     int y=0;
     printf("Komponen yang  tersedia :\n");
-    printf("1. Motherboard Common\n");
-    printf("2. Motherboard Super\n");
-    printf("3. CPU Common\n");
-    printf("4. CPU Super\n");
-    printf("5. Memory Common\n");
-    printf("6. Memory Super\n");
-    printf("7. CPU Cooler Common\n");
-    printf("8. CPU Cooler Super\n");
-    printf("9. Case Common\n");
-    printf("10. Case Super\n");
-    printf("11. GPU Common\n");
-    printf("12. GPU Super\n");
-    printf("13. Storage Common\n");
+    printf("1. Motherboard Common ~$250\n");
+    printf("2. Motherboard Super ~$500\n");
+    printf("3. CPU Common ~$500\n");
+    printf("4. CPU Super ~$750\n");
+    printf("5. Memory Common ~$150\n");
+    printf("6. Memory Super ~$200\n");
+    printf("7. CPU Cooler Common ~$100\n");
+    printf("8. CPU Cooler Super ~$150\n");
+    printf("9. Case Common ~$25\n");
+    printf("10. Case Super ~$50\n");
+    printf("11. GPU Common ~300\n");
+    printf("12. GPU Super ~400\n");
+    printf("13. Storage Common ~150\n");
     printf("14. Storage Super\n");
     printf("15. PSU Common\n");
     printf("16. PSU Super\n");
@@ -157,19 +158,16 @@ void Shop(void)
     
     default:
         printf("Invalid Input!");
+        Shop();
         break;
     } 
 }
 
+
 int main()
 {
-    printf("tes\n");
     MAKEPETA();
-    printf("tes\n");
-    TulisMATRIKS(PETA);
-    printf("tes\n");
     CREATECOMMAND();
-    printf("tes\n");
     printf("KETIK START UNTUK MEMULAI!\n");
     InputCommand(&K);
     while (!IsKataSama(K,MULAI))
