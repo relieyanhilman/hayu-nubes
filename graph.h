@@ -2,77 +2,98 @@
 /* Definisi ADT Graph */
 /* Menggunakan representai multilist */
 
-#ifndef GRAPH_H
-#define GRAPH_H
+#ifndef graf_H
+#define graf_H
 
 #include "boolean.h"
-#include "listlinier.h"
+#define Nil NULL
 
-#define NodeUndef 0
+typedef int infograph;
 
-typedef List infotypeG; /* tipe info */
-typedef struct tElmtGraph *addressG;
-typedef struct tElmtGraph {
-    infotypeG info;
-    addressG NextGraph;
-} ElmtGraph;
-typedef struct {
-    addressG FirstG;
+typedef struct tNodeGraph* adrNode;
+
+typedef struct tSuccNode* adrSuccNode;
+
+typedef struct tNodeGraph{
+ infograph Id;
+    adrSuccNode Trail;
+    adrNode NextG;
+} NodeGraph;
+
+typedef struct tSuccNode{
+    adrNode Succ;
+    adrSuccNode NextG;
+} SuccNode;
+
+typedef struct{
+    adrNode FirstG;
 } Graph;
 
-/* SELEKTOR */
-#define Info(P) (P)->info
-#define NextGraph(P) (P)->NextGraph
+
+/* *** Selektor *** */
 #define FirstG(G) (G).FirstG
+#define Id(Pn) (Pn)->Id
+#define Trail(Pn) (Pn)->Trail
+#define Succ(Pn) (Pn)->Succ
+#define NPred(Pn) (Pn)->NPred
+#define NextG(Pn) (Pn)->NextG
 
-/****************** PEMBUATAN GRAPH KOSONG ******************/
-void CreateEmptyGraph(Graph *G);
-/* I.S. G sembarang */
-/* F.S. Terbentuk graph kosong */
+/* *** Konstruktor *** */
+void CreateGraph(infograph X, Graph* G);
+/* I.S. Sembarang ; F.S. Terbentuk Graph dengan satu simpul dengan Id=X */
 
-/****************** TEST GRAPH KOSONG ******************/
-boolean IsEmptyGraph(Graph G);
-/* mengeluarkan true jika graph G kosong */
+/* *** Manajemen Memory List Simpul (Leader) *** */
+adrNode AlokNodeGraph(infograph X); 
+/* Mengembalikan address hasil alokasi Simpul X .
+ Jika alokasi berhasil, maka address tidak Nil, misalnya
+ menghasilkan P, maka Id X, 
+ Npred(P)=0, Trail(P)=Nil,
+ dan NextG(P)=Nil. Jika alokasi
+ gagal, mengembalikan Nil. */
 
-/****************** Manajemen Memori ******************/
-addressG AlokasiGraph (infotypeG X);
-/* Mengirimkan address hasil alokasi sebuah elemen */
-/* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
-/* menghasilkan P, maka Info(P)=X, NextGraph(P)=Nil */
-/* Jika alokasi gagal, mengirimkan Nil */
-void DealokasiGraph (addressG *P);
-/* I.S. P terdefinisi */
-/* F.S. P dikembalikan ke sistem */
-/* Melakukan dealokasi/pengembalian address P */
+void DeAlokNodeGraph(adrNode P);
+/* I.S. P terdefinisi F.S. P dikembalikan ke sistem */
 
-/*** PENAMBAHAN ELEMEN ***/
-void InsVFirstGraph (Graph *G, infotypeG X);
-/* I.S. G mungkin kosong */
-/* F.S. Melakukan alokasi sebuah elemen dan */
-/* menambahkan elemen pertama dengan list X jika alokasi berhasil */
-void InsVLastGraph(Graph *G, infotypeG X);
-/* I.S. G mungkin kosong */
-/* F.S. Melakukan alokasi sebuah elemen dan */
-/* menambahkan elemen graph di akhir: elemen terakhir yang baru */
-/* merupakan list X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
+adrSuccNode AlokSuccNode(adrNode Pn);
+/*  Mengembalikan address hasil alokasi.
+ Jika alokasi berhasil, maka address tidak Nil, misalnya
+ menghasilkan Pt, maka Succ (Pt)=Pn dan NextG(Pt)=Nil. 
+ Jika alokasi gagal, mengembalikan Nil. */
 
-void ResetGraph(Graph *G, int n);
-/* I.S. Graph G sembarang */
-/* F.S. Terbentuk Graph dengan n node dengan belum ada edge */
+void DealokSuccNode(adrSuccNode P);
+/* I.S. P terdefinisi F.S. P dikembalikan ke sistem */
 
-/*** JUMLAH ELEMEN ***/
-int NbElmtGraph(Graph G);
-/* mengeluarkan jumlah node pada graph G */
+/*  *** Fungsi/Prosedur Lain ***  */
+adrNode SearchNode(Graph G, infograph X);
+/* Mengembalikan address simpul dengan Id=X jika sudah ada pada graph G,
+ Nil jika belum */
 
-/*** PENCARIAN ELEMEN ***/
-infotypeG SearchGraph(Graph G, int n);
-/* NbElmtGraph(G) lebih besar dari n, mengeluarkan list yang merupakan info dari elemen ke n graph G */
-int SearchInfoGraph(infotypeG L, infotypeL i);
-/* mengeluarkan posisi dimana list L bernilai i, mengeluarkan 0 jika tidak ada */
+adrSuccNode SearchEdge(Graph G, infograph prec, infograph succ); 
+/*  Mengembalikan address trailer yang menyimpan info busur (prec,succ)
+ jika sudah ada pada graph G, Nil jika belum */
 
-void GenerateRandomGraph(Graph *G,int n);
-/* I.S. G sembarang */
-/* F.S. G adalah connected graph dengan n node */
-/* G didapat melalui hasil generate secara random */
+void InsertNode(Graph* G, infograph X, adrNode* Pn);
+/* Menambahkan simpul X ke dalam graph, jika alokasi X berhasil.
+ I.S. G terdefinisi, X terdefinisi dan belum ada pada G.
+ F.S. Jika alokasi berhasil, X menjadi elemen
+ terakhir G, Pn berisi address simpul X. Jika alokasi gagal, G tetap, Pn berisi Nil */
 
-#endif // GRAPH_H
+
+void InsertEdge(Graph* G, infograph prec, infograph succ);
+/*  Menambahkan busur dari prec menuju succ ke dalam G 
+ I.S. G, prec, succ terdefinisi.
+ F.S. Jika belum ada busur (prec,succ) di G, maka tambahkan busur
+  (prec,succ) ke G. Jika simpul prec/succ belum ada pada G,
+  tambahkan simpul tersebut dahulu. Jika sudah ada busur (prec,succ)
+  di G, maka G tetap. */
+
+
+/* *** Lain-Lain *** */
+
+void Connect(Graph *G, infograph N1, infograph N2);
+/* Menyambungkan N1 dan N2 */
+
+boolean isConnected (Graph G, infograph N1, infograph N2);
+/* Mengembalikan apakah N1 dan N2 terhubung */
+
+#endif
