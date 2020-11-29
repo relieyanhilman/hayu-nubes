@@ -17,7 +17,7 @@ boolean IsEmptyQ(Queue Q){
     return ((Head(Q) == Nil) && (Tail(Q) == Nil));
 }
 
-void CreateEmpty(Queue *Q){
+void CreateEmptyQ(Queue *Q){
     Head(*Q) = Nil;
     Tail(*Q) = Nil;
 }

@@ -1,5 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "mesinkata.h"
+#include "mesinkar.h"
+#include "matriks.h"
 
 boolean EndKata;
 Kata CKata;

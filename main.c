@@ -82,26 +82,41 @@ void MAKEPETA()
         } 
         i++;
     }
-    
-    /*loop pertama */
-    int a = 1, b = 1; 
+
+    /* int a, b;
+    Graph G;
+    ADVKATA();
+    CreateEmptyGraph(&G);
+    for (a=1 ; a<= JUMLAHBANGUNAN; a++){
+        InsertNode(&G, a, )
+        for (b = 1; b<=JUMLAHBANGUNAN ; b++) {
+            if (KataToInt(CKata) == 1) {
+                Connect(&G, a, b);
+            } 
+            ADVKATA();
+        }  */
+        
+        /*loop pertama */
+    int a = 1, b = 1; adrNode An; adrSuccNode Bn;
     
     ADVKATA();
-    CreateGraph(a, &G);
+    CreateEmptyGraph(&G);
     for (a=1 ; a<= JUMLAHBANGUNAN; a++ ){
+        InsertNode(&G, a, &An);
         for (b = 1; b<=JUMLAHBANGUNAN ; b++) {
             int inputan = KataToInt(CKata);
             if (inputan == 1) {
-                    InsertEdge (&G, i, j);
+                    InsertEdge (&G, a, b);
+                    
             } ADVKATA();
         }
-    }  
-    }
 
 
+    } 
+}
 
 void Shop(void)
-{
+{ /*
     int i=0;
     int y=0;
     printf("Komponen yang  tersedia :\n");
@@ -177,7 +192,7 @@ void Shop(void)
     default:
         printf("Invalid Input!");
         break;
-    } 
+    }*/
 }
 
 int main()
@@ -203,9 +218,8 @@ int main()
     {
         if (IsKataSama(K,MOVE))
         {
-            
             MAKEPETA();
-            if (isConnected(G, 1, 4)) {
+            if (isConnected(G, 7, 1)) {
                 printf("ye bener");
             }
             else{

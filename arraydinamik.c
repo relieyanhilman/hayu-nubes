@@ -58,12 +58,12 @@ boolean IsIdxEff(TabInt T, IdxType i){
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test tabel kosong *** */
-boolean IsEmpty(TabInt T){
+boolean IsEmptyArray(TabInt T){
     return (Neff(T)==0);
 }
 /* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
 /* *** Test tabel penuh *** */
-boolean IsFull(TabInt T){
+boolean IsFullArray(TabInt T){
     return(Neff(T)==MaxEl(T)-IdxMin+1);
 }
 /* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
