@@ -15,12 +15,13 @@ typedef struct tNodeGraph* adrNode;
 typedef struct tSuccNode* adrSuccNode;
 
 typedef struct tNodeGraph{
- infograph Id;
+    infograph Id;
     adrSuccNode Trail;
     adrNode NextG;
 } NodeGraph;
 
 typedef struct tSuccNode{
+    infograph Id;
     adrNode Succ;
     adrSuccNode NextG;
 } SuccNode;
@@ -41,6 +42,8 @@ typedef struct{
 /* *** Konstruktor *** */
 void CreateGraph(infograph X, Graph* G);
 /* I.S. Sembarang ; F.S. Terbentuk Graph dengan satu simpul dengan Id=X */
+
+void CreateEmptyGraph(Graph *G);
 
 /* *** Manajemen Memory List Simpul (Leader) *** */
 adrNode AlokNodeGraph(infograph X); 
@@ -63,6 +66,9 @@ adrSuccNode AlokSuccNode(adrNode Pn);
 void DealokSuccNode(adrSuccNode P);
 /* I.S. P terdefinisi F.S. P dikembalikan ke sistem */
 
+boolean IsEmptyGraph (Graph G);
+/*Mengembalikan true jika Graph G kosong, dan false jika tidak*/
+
 /*  *** Fungsi/Prosedur Lain ***  */
 adrNode SearchNode(Graph G, infograph X);
 /* Mengembalikan address simpul dengan Id=X jika sudah ada pada graph G,
@@ -78,7 +84,6 @@ void InsertNode(Graph* G, infograph X, adrNode* Pn);
  F.S. Jika alokasi berhasil, X menjadi elemen
  terakhir G, Pn berisi address simpul X. Jika alokasi gagal, G tetap, Pn berisi Nil */
 
-
 void InsertEdge(Graph* G, infograph prec, infograph succ);
 /*  Menambahkan busur dari prec menuju succ ke dalam G 
  I.S. G, prec, succ terdefinisi.
@@ -87,6 +92,9 @@ void InsertEdge(Graph* G, infograph prec, infograph succ);
   tambahkan simpul tersebut dahulu. Jika sudah ada busur (prec,succ)
   di G, maka G tetap. */
 
+void AddNodeGraph (Graph *G, int X);
+/*I.S. Graph G terdefinisi*/
+/*F.S. Elemen node dimasukkan secara terurut*/
 
 /* *** Lain-Lain *** */
 

@@ -14,6 +14,9 @@ void CreateGraph(infograph X, Graph* G){
  InsertNode(G, X, &P);
 }
 
+void CreateEmptyGraph(Graph *G){
+   FirstG(*G) = Nil;
+}
 
 /* *** Manajemen Memory List Simpul (Leader) *** */
 adrNode AlokNodeGraph (infograph X){
@@ -60,6 +63,10 @@ void DealokSuccNode (adrSuccNode P){
     free(P);
 }
 
+boolean IsEmptyGraph (Graph G){
+/*Mengembalikan true jika Graph G kosong, dan false jika tidak*/
+   return (FirstG(G) == Nil);
+}
 
 adrNode SearchNode (Graph G, infograph X){
  /* Mengembalikan address simpul dengan Id=X jika sudah ada pada graph G, Nil jika belum */
@@ -75,8 +82,6 @@ adrNode SearchNode (Graph G, infograph X){
 
     return P;
 }
-
-
 
 adrSuccNode SearchEdge (Graph G, infograph prec, infograph succ){
  /*  Mengembalikan address trailer yang menyimpan info busur (prec,succ)
@@ -162,6 +167,25 @@ void InsertEdge (Graph* G, infograph prec, infograph succ){
  }
  // else Edge sudah ada
  
+}
+
+void AddNodeGraph (Graph *G, int X){
+/*I.S. Graph G terdefinisi*/
+/*F.S. Elemen node dimasukkan secara terurut*/
+   int i;
+   adrNode P, Q;
+   for (i=1; i<=X ; i++){
+      Q = AlokNodeGraph(i);
+      if (Q != Nil){
+         if (IsEmptyGraph(*G)){
+            FirstG(*G) = Q;
+            P = FirstG(*G);
+         } else {
+            NextG(P) = Q;
+            P = NextG(P);
+         }
+      }
+   }
 }
 
 /* *** Lain-Lain *** */
